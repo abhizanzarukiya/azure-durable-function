@@ -1,0 +1,10 @@
+{
+  "azureFunctions.javaBuildTool": "maven",
+  "azureFunctions.deploySubpath": "target/azure-functions/azure-durable-functions-1720631513262",
+  "azureFunctions.projectLanguage": "Java",
+  "azureFunctions.projectRuntime": "~4",
+  "debug.internalConsoleOptions": "neverOpen",
+  "azureFunctions.preDeployTask": "package (functions)",
+  "azureFunctions.templateFilter": "All",
+  "java.configuration.updateBuildConfiguration": "interactive"
+}
