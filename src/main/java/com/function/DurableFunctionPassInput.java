@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.web.reactive.function.client.WebClient;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.azure.functions.ExecutionContext;
 import com.microsoft.azure.functions.HttpMethod;
@@ -23,6 +25,7 @@ import com.microsoft.durabletask.azurefunctions.DurableOrchestrationTrigger;
 import com.model.ClientDTO;
 import com.model.HandlerResult;
 import com.model.ResponseDTO;
+import com.webclient.Webclient;
 
 public class DurableFunctionPassInput {
     
@@ -68,6 +71,7 @@ public class DurableFunctionPassInput {
         handlers.add("PersonalInfo");
         handlers.add("Address");
         handlers.add("KycInfo");
+        handlers.add("FetchInfo");
 
         List<String> result = new ArrayList<>();    
 
@@ -135,6 +139,17 @@ public class DurableFunctionPassInput {
         }else{
             result = "Skipped";
         }
+        
+        return new HandlerResult(result, clientDto);
+    }
+
+    @FunctionName("FetchInfo")
+    public HandlerResult fetchInfo(
+            @DurableActivityTrigger(name = "name") ClientDTO clientDto,
+            final ExecutionContext context) {
+
+        Integer id = clientDto.getId();                        
+        String result = Webclient.getResponse("https://api.restful-api.dev/objects?id="+id);       
         
         return new HandlerResult(result, clientDto);
     }
